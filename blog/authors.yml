@@ -1,0 +1,8 @@
+fabfog:
+  name: Fabio Fognani
+  title: random nerd
+  image_url: https://github.com/fabfog.png
+  page: true
+  socials:
+    github: fabfog
+
