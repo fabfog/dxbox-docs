@@ -1,6 +1,6 @@
 # Getting started
 
-Let's discover **use-less-react in 5 minutes**.
+Let's start using **use-less-react**!
 
 ## 🔹 Installation
 
