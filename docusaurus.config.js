@@ -14,8 +14,8 @@ const config = {
 
   title: 'dxbox docs',
   tagline: "smart tools for smart developers",
-  url: 'https://github.com',
-  baseUrl: '/fabfog/dxbox-docs/',
+  url: 'https://dxbox-docs.vercel.app/',
+  baseUrl: '/',
   projectName: 'dxbox-docs',
   organizationName: 'dxbox',
 
