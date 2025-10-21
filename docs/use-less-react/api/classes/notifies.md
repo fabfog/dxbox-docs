@@ -153,6 +153,5 @@ class SomeClass extends PubSub {
 
 ## See Also
 
-- [`@DependsOn`](./decorators.md#dependson-decorator)
-- [`PubSub`](./pubsub.md)
-- [`useReactiveInstance`](./useReactiveInstance.md)
+- [`PubSub`](/docs/use-less-react/api/classes/pubsub)
+- [`PubSubMixin`](/docs/use-less-react/api/classes/pubsub-mixin)
