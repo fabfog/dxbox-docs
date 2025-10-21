@@ -88,4 +88,4 @@ import PubSubMixinPlayground from '../../playgrounds/pubsub-mixin';
 
 - [`PubSub`](/docs/use-less-react/api/classes/pubsub)
 <!-- TODO -->
-- [`Notifies`](/docs/use-less-react/api/classes/notifies) 
+<!-- - [`Notifies`](/docs/use-less-react/api/classes/notifies)  -->
