@@ -1,4 +1,4 @@
-# `SerializableClass`
+# `@SerializableClass`
 
 ### Overview
 The `@SerializableClass` decorator is a **meta-decorator** used to mark classes as serializable.  
