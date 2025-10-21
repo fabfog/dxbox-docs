@@ -1,36 +1,20 @@
 
 import { SandboxEmbed } from '../../../src/components/SandboxEmbed';
 
-export default function Playground() {
-return <SandboxEmbed files={{
-    "/counter.js": `
-import { PubSub } from  "@dxbox/use-less-react/classes";
-
-export class Counter extends PubSub {
-  constructor() { 
-    super();
-    this.count = 0;
-  }
-  increment() {
-    this.count++;
-    this.notify("count");
-  }
-}
-`,
-  "/App.js": `
+const app = `
 import React from "react";
 import { useReactiveInstance } from "@dxbox/use-less-react/client";
-import { Counter } from "/counter.js";
+import { Counter } from "/counter.ts";
 
 export default function App() {
-  const { 
+  const {
     state: { count }, 
     instance,
   } = useReactiveInstance(
     () => new Counter(),
     ["count"]
   );
-  
+
   return (
     <div style={{ padding: 20 }}>
       <div>Count: {count}</div>
@@ -41,16 +25,44 @@ export default function App() {
       </button>
     </div>
   );
+}`;
+
+const counter = `
+import { PubSub, Notifies } from  "@dxbox/use-less-react/classes";
+
+export class Counter extends PubSub {
+  constructor(public count: number = 0) { 
+    super();
+  }
+  @Notifies("count")
+  increment() {
+    this.count++;
+  }
 }
-  `,
-    "/index.js": `
+`
+
+const appIndex = `
 import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App";
+import App from "./App.tsx";
 
 const root = createRoot(document.getElementById("root"));
 root.render(<App />);
 `
-    }}
-  />
+
+const files = {
+  "/App.tsx": {
+    code: app,
+  },
+  "/counter.ts": { 
+    code: counter,
+  },
+  "/index.ts": {
+    code: appIndex,
+    hidden: true,
+  }
+}
+
+export default function Playground() {
+  return <SandboxEmbed template='react-ts' files={files} />
 }

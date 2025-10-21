@@ -44,9 +44,9 @@ function CounterComponent({ counter }: { counter: Counter }) {
 }
 ```
 
-import BasicPlayground from '../../playgrounds/basic';
+import PubSubPlayground from '../../playgrounds/pubsub';
 
-<BasicPlayground />
+<PubSubPlayground />
 
 ---
 
@@ -78,6 +78,28 @@ sprite.onNotify(["x"], ({ x }) => {
 });
 ```
 The `onNotify` method returns all the notified attributes in a key-value object.
+
+### Notify a derived value calculated via a get method
+
+Let's say you have a class using a get method like this:
+
+```ts
+export class Sprite extends PubSub {
+  private x = 0;
+  private y = 0;
+
+  public get position() {
+    return { x: this.x, y: this.y };
+  }
+
+  @Notifies("position")
+  public setPosition(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
+}
+```
+When `setPosition` notifies `position`, everything will work like with a standard class attribute. So you can define derived values, notify them, and let `useReactiveInstance` know their value has changed, like any other attribute.
 
 ## Notes
 

@@ -28,13 +28,20 @@ const sidebars = {
           items: [
             'use-less-react/api/classes/pubsub',
             'use-less-react/api/classes/pubsub-mixin',
+            'use-less-react/api/classes/depends-on',
+            'use-less-react/api/classes/notifies',
+            'use-less-react/api/classes/immutable-class',
+            'use-less-react/api/classes/serializable-class',
           ]
         },
         {
           type: 'category',
           label: 'Client',
           items: [
-            'use-less-react/api/client/useReactiveInstance',
+            'use-less-react/api/client/use-reactive-instance',
+            'use-less-react/api/client/create-generic-context',
+            'use-less-react/api/client/create-hydration-context',
+
           ]
         },
       ]

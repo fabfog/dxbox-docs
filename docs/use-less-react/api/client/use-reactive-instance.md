@@ -44,9 +44,9 @@ In this example:
 - The React component listens to updates for the `count` key.
 - When `increment()` is called, `useReactiveInstance` automatically triggers a re-render of the component.
 
-import BasicPlayground from '../../playgrounds/basic';
+import PubSubPlayground from '../../playgrounds/pubsub';
 
-<BasicPlayground />
+<PubSubPlayground />
 
 ---
 

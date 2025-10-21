@@ -3,6 +3,24 @@ import { SandboxEmbed } from '../../../src/components/SandboxEmbed';
 
 export default function Playground() {
 return <SandboxEmbed files={{
+  "/App.js": `
+import React from "react";
+import { useReactiveInstance, createGenericContext } from "@dxbox/use-less-react/client";
+import { Counter } from "/counter.js";
+
+import { GenericContextProvider } from './context.js';
+import { CounterComponent } from './counter-component.js';
+
+export default function App() {
+  const counter = React.useRef(new Counter())
+  
+  return (
+    <GenericContextProvider value={counter.current}>
+      <CounterComponent />
+    </GenericContextProvider>
+  );
+}
+  `,
     "/counter.js": `
 import { PubSub } from  "@dxbox/use-less-react/classes";
 
@@ -24,24 +42,6 @@ const [GenericContextProvider, useGenericContext] = createGenericContext();
 
 export { GenericContextProvider, useGenericContext }
 `,
-  "/App.js": `
-import React from "react";
-import { useReactiveInstance, createGenericContext } from "@dxbox/use-less-react/client";
-import { Counter } from "/counter.js";
-
-import { GenericContextProvider } from './context.js';
-import { CounterComponent } from './counter-component.js';
-
-export default function App() {
-  const counter = React.useRef(new Counter())
-  
-  return (
-    <GenericContextProvider value={counter.current}>
-      <CounterComponent />
-    </GenericContextProvider>
-  );
-}
-  `,
   "/counter-component.js": `
 import React from "react";
 import { useReactiveInstance, createGenericContext } from "@dxbox/use-less-react/client";
