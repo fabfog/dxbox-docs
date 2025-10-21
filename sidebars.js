@@ -46,7 +46,12 @@ const sidebars = {
         },
       ]
     },
-    'use-less-react/faq',
+    // 'use-less-react/faq',
+    {
+      type: 'link',
+      label: 'View GitHub repo',
+      href: 'https://github.com/fabfog/use-less-react',
+    },
   ],
 };
 

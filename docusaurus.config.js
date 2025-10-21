@@ -13,7 +13,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   title: 'dxbox docs',
-  tagline: "smart tools for smart developers",
+  tagline: "Tools for the developer",
   url: 'https://dxbox-docs.vercel.app/',
   baseUrl: '/',
   projectName: 'dxbox-docs',
