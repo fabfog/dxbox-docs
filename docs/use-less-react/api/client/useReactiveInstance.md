@@ -44,14 +44,9 @@ In this example:
 - The React component listens to updates for the `count` key.
 - When `increment()` is called, `useReactiveInstance` automatically triggers a re-render of the component.
 
----
+import BasicPlayground from '../../playgrounds/basic';
 
-## Return type
-
-| Property | Type | Description |
-|-----------|------|-------------|
-| `state` | `Pick<TClass, TDep>` | A snapshot of the reactive properties specified in the second argument. React components can safely read from it without causing extra reactivity. |
-| `instance` | `TClass` | The original instance of the reactive class (generic `TClass`). Use it to call methods, or read non-reactive fields.|
+<BasicPlayground />
 
 ---
 
@@ -68,6 +63,15 @@ const { state, instance } = useReactiveInstance<T>(
 |------------|------|-----------|-------------|
 | `instanceGetter` | `TClass | (() => TClass)` | ✅ | An instance, or a function returning a new instance of your reactive class. If a function is passed, it’s invoked only once per component lifecycle.|
 | `keys` | `(keyof TClass)[]` | ✅ | The list of reactive property keys you want the component to listen to. |
+
+---
+
+## Return type
+
+| Property | Type | Description |
+|-----------|------|-------------|
+| `state` | `Pick<TClass, TDep>` | A snapshot of the reactive properties specified in the second argument. React components can safely read from it without causing extra reactivity. |
+| `instance` | `TClass` | The original instance of the reactive class (generic `TClass`). Use it to call methods, or read non-reactive fields.|
 
 ---
 
