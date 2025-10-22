@@ -12,7 +12,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   favicon: 'img/favicon.ico',
 
-  title: 'dxbox docs',
+  title: '@dxbox docs',
   tagline: "Tools for the developer",
   url: 'https://dxbox-docs.vercel.app/',
   baseUrl: '/',

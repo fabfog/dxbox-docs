@@ -15,7 +15,7 @@ function Section({ className, title, border = false, children }) {
         border: border ? "1px solid #808080" : undefined
       }}
     >
-      <Heading as="h1" className="hero__title">
+      <Heading as="h2" className="hero__title">
         {title}
       </Heading>
       {children}
@@ -47,9 +47,10 @@ export default function Home() {
       <main>
         
         <Section
+          className={styles.linksSection}
           title={<code>use-less-react</code>}
         >
-          <div className={styles.buttons}>
+          <div className={styles.links}>
             <Link
               className="button button--secondary button--lg"
               style={{ width: "100%"}}

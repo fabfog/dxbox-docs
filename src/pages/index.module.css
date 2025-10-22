@@ -14,9 +14,15 @@
   .heroBanner {
     padding: 2rem;
   }
+  
+  .linksSection {
+    flex-direction: column;
+    gap: 18px;
+    font-size: small;
+  }
 }
 
-.buttons {
+.links {
   display: flex;
   flex-direction: column;
   gap: 16px;
