@@ -17,7 +17,7 @@ Or, if I may simplify:
 
 > What if React state management could be done in plain JavaScript?
 
----
+<!-- truncate -->
 
 ## Why another state management library?
 
