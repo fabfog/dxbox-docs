@@ -61,7 +61,7 @@ const { state, instance } = useReactiveInstance<T>(
 
 | Parameter | Type | Required | Description |
 |------------|------|-----------|-------------|
-| `instanceGetter` | `TClass | (() => TClass)` | ✅ | An instance, or a function returning a new instance of your reactive class. If a function is passed, it’s invoked only once per component lifecycle.|
+| `instanceGetter` | `TClass \| (() => TClass)` | ✅ | An instance, or a function returning a new instance of your reactive class. If a function is passed, it’s invoked only once per component lifecycle.|
 | `keys` | `(keyof TClass)[]` | ✅ | The list of reactive property keys you want the component to listen to. |
 
 ---
@@ -81,10 +81,3 @@ const { state, instance } = useReactiveInstance<T>(
 - You can safely use multiple instances of the same reactive class in different components; each will have isolated reactivity.
 - The hook internally uses React’s `useState` and `useEffect` to maintain synchronization, ensuring full compatibility with concurrent rendering and SSR environments.
 - Works seamlessly with `ImmutableClass` and `DependsOn` decorators.
-
----
-
-## See Also
-
-- [`PubSub`](/docs/use-less-react/api/classes/pubsub)
-- [`PubSubMixin`](/docs/use-less-react/api/classes/pubsub-mixin)

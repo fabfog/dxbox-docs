@@ -83,7 +83,3 @@ import PubSubMixinPlayground from '../../playgrounds/pubsub-mixin';
 
 <PubSubMixinPlayground />
 
-
-## See Also
-
-- [`PubSub`](/docs/use-less-react/api/classes/pubsub)

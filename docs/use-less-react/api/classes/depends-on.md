@@ -56,8 +56,3 @@ By doing so, whenever `firstName` or `lastName` will be notified, also `fullName
 - Works only on classes extending or mixing in `PubSub`.
 - Dependency tracking is stored in a shared `WeakMap` to avoid memory leaks.
 - Circular dependencies must be avoided, as they can cause infinite notification loops.
-
-## See Also
-
-- [`PubSub`](/docs/use-less-react/api/classes/pubsub)
-- [`PubSubMixin`](/docs/use-less-react/api/classes/pubsub-mixin)

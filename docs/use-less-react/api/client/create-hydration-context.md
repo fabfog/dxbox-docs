@@ -147,8 +147,3 @@ export const HomepageClientSideComponent: FC = () => {
 - The `hydrateInstances` function reconstructs real instances from their serialized representations using the `SerializableClassesRegistry`.
 - The design ensures **stable, shared instance references** between components — preventing multiple independent hydrations of the same object.
 - This pattern allows **universal class instances** to persist seamlessly across server and client boundaries in a Next.js/React environment.
-
-## See Also
-
-- [`PubSub`](/docs/use-less-react/api/classes/pubsub)
-- [`PubSubMixin`](/docs/use-less-react/api/classes/pubsub-mixin)

@@ -106,7 +106,3 @@ When `setPosition` notifies `position`, everything will work like with a standar
 - `PubSub` is **agnostic** to the UI layer — it can be used in React, Node.js, or any JS runtime.
 - Use decorators like `@Notifies` and `@DependsOn` to integrate smoothly with reactivity systems.
 - Combine with the `@ImmutableClass` decorator for safer state updates in development.
-
-## See Also
-
-- [`PubSubMixin`](/docs/use-less-react/api/classes/pubsub-mixin)

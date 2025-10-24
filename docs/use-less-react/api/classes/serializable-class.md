@@ -32,8 +32,3 @@ If the class is missing either `hydrate` or `dehydrate`, a warning or error can 
 - Purely declarative — used for static analysis or runtime validation.
 - Encourages consistent serialization patterns across the app.
 - Useful in combination with `createHydrationContext` to rehydrate data from the server.
-
-## See Also
-
-- [`PubSub`](/docs/use-less-react/api/classes/pubsub)
-- [`PubSubMixin`](/docs/use-less-react/api/classes/pubsub-mixin)

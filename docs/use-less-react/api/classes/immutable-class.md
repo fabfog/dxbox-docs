@@ -71,8 +71,3 @@ store.user.name = "Bob"; // ❌ TypeError: Cannot assign to read only property
     ...
   }
   ```
-
-## See Also
-
-- [`PubSub`](/docs/use-less-react/api/classes/pubsub)
-- [`PubSubMixin`](/docs/use-less-react/api/classes/pubsub-mixin)

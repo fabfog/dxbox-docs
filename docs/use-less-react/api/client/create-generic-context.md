@@ -66,7 +66,6 @@ Just basic React here.
 
 | Property / Return | Type | Description |
 |--------------------|------|--------------|
-| `GenericContext` | `Context<T \| null>` | The internal context object created with `createContext`. |
 | `GenericContextProvider` | `FC<PropsWithChildren<{ value: T }>>` | A provider component that exposes the context value to its children. |
 | `useGenericContext()` | `() => T` | Hook to access the context value. Throws an error if called outside of its provider. |
 | **Return value** | `[GenericContextProvider, useGenericContext]` | A tuple containing both the provider and the hook. |
@@ -74,8 +73,3 @@ Just basic React here.
 ### Notes
 - The value passed to the provider should be stored inside a `useRef` if the reference should remain stable across renders.
 - The hook enforces safety by throwing an error if called outside of its context provider.
-
-## See Also
-
-- [`PubSub`](/docs/use-less-react/api/classes/pubsub)
-- [`PubSubMixin`](/docs/use-less-react/api/classes/pubsub-mixin)
