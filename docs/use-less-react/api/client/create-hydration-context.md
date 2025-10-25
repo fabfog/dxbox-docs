@@ -9,8 +9,10 @@ First, you define your class by decorating it with the `@Serializable` decorator
 
 ```ts
 // classes.ts 
-@Serializable()
+@SerializableClass()
 export class Sprite extends PubSub {
+  static readonly serialName: string = "PubSub";
+
   constructor(private x: number, private y: number) {
     super();
   }
@@ -55,7 +57,7 @@ You must register the class inside a **static** constant shared between server s
 ```ts
 // serializable-classes-registry.ts
 export const serializableClassesRegistry: SerializableClassesRegistry = {
-  Sprite,
+  [Sprite.serialName]: Sprite,
 };
 ```
 

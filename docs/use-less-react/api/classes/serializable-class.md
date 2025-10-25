@@ -2,7 +2,7 @@
 
 ### Overview
 The `@SerializableClass` decorator is a **meta-decorator** used to mark classes as serializable.  
-It does not modify runtime behavior, but serves as a **developer hint and validation tool** to ensure the class implements `hydrate` and `dehydrate` methods correctly.
+It does not modify runtime behavior, but serves as a **developer hint and validation tool** to ensure the class has a `serialName` static const and implements `hydrate` and `dehydrate` methods correctly.
 
 ### Example
 
@@ -10,6 +10,8 @@ It does not modify runtime behavior, but serves as a **developer hint and valida
 @SerializableClass()
 class UserStore {
   name = "John";
+
+  static readonly serialName: string = "UserStore";
 
   hydrate(data) {
     this.name = data.name;
@@ -21,7 +23,12 @@ class UserStore {
 }
 ```
 
-If the class is missing either `hydrate` or `dehydrate`, a warning or error can be triggered at runtime or build time, depending on configuration.
+If the class is missing either `serialName`, `hydrate` or `dehydrate`, a warning or error will be triggered at build time.
+Please note what follows:
+1. the value of `serialName` can be whatever you want
+2. you should define `serialName` as `readonly` so it cannot be changed by accident
+3. you should define `serialName` as `string` or TypeScript will infer its value as its type (because it's static)
+4. when adding a class to `serializableClassesRegistry`, use `serialName` as key (see below)
 
 ### Properties
 | Property | Type | Description |
