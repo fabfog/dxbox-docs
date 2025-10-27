@@ -31,13 +31,13 @@ function MyMenu() {
 }
 ```
 
-This is clean & pragmatic. You're following the **"Principle of Least Height"**—keeping state as local as possible for as long as possible.
+This is clean & pragmatic. You're keeping state as local as possible until a different necessity arises.
 
 Then, a new requirement lands on your desk.
 
 *"We're building a tutorial wizard, and it needs to be able to open that menu automatically to show the user where to click."*
 
-**...And suddenly, your world falls apart.**
+**...and suddenly, you're not so sure about what's "local" and what's not.**
 
 <!-- truncate -->
 
@@ -63,10 +63,10 @@ You just turned a single line of state into **30+ lines of code across 3-4 diffe
 
 We may call it the **Boilerplate Tax**.
 
-It's so painful that most developers give up. They either 
+It's so painful that most developers give up. They either
 1. violate the **YAGNI** ("You Ain't Gonna Need It") principle and put *everything* in a global state manager "just in case", or...
-2. ...create a tangled mess of prop-drilling if the state must be lifted "just a little", or...
-3. go copy an existing context because who the hell remembers the syntax and is willing to rewrite it all once again.
+2. ...create a tangled mess of prop-drilling if the state must be lifted *"just a little"*, or...
+3. go copy an existing context because who the hell remembers the syntax and is willing to rewrite it all, once again.
 
 I'd pick option 4 and create a code generator with Plop, or something like that, but it's still sub-optimal, as it ends up introducing a good amount of lines of codes that are virtually identical from one context to another. It ends up violating the **DRY** ("Don't Repeat Yourself") principle in a way or another.
 
@@ -74,7 +74,7 @@ This is where `use-less-react` comes in.
 
 ## Refactoring Without the Friction
 
-What if you could "lift state" without paying the tax? What if the refactor was so simple, you'd never hesitate to do it?
+What if you could "lift state" without paying the tax? What if the refactor was so simple, you'd never hesitate to do it? What if it was so fast, you could do it anytime without the fear of just losing time?
 
 This is what `use-less-react` is designed for. It separates the **what** (your state & logics) from the **where** (your state's scope) and the **how** (the UI library that will consume your state and drive your logics).
 
@@ -138,9 +138,9 @@ import { createGenericContext } from '@dxbox/use-less-react/client';
 import { MenuState } from './menu-state.classes';
 
 const [MenuProvider, useMenu] = createGenericContext<MenuState>();
-
 export { MenuProvider, useMenu };
 ```
+4 lines of code, 2 of which are trivial imports, and one line is just to make the export more clear.
 
 **2. "Lift" the State in your app root:**
 Move the instance creation from the component to the provider.
@@ -149,13 +149,16 @@ Move the instance creation from the component to the provider.
 import { MenuProvider } from './menu-context';
 import { MenuState } from 'menu-state.classes.ts';
 
-function MyApp({ Component, pageProps }) {
+function MyApp() {
+  // this assumes the app is running client-side
+  // See createHydrationContext to share instances between ssr and csr.
   const menu = useRef(new MenuState());
   return (
     // We provide the instance at the top.
     // The tutorial can now access this same instance.
     <MenuProvider value={menu.current}>
-      ...
+      <Tutorial />
+      // ...other components
     </MenuProvider>
   );
 }
