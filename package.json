@@ -17,7 +17,7 @@
     "@codesandbox/sandpack-react": "^2.20.0",
     "@docusaurus/core": "3.9.2",
     "@docusaurus/preset-classic": "3.9.2",
-    "@dxbox/use-less-react": "file:../use-less-react/dxbox-use-less-react-0.3.10.tgz",
+    "@dxbox/use-less-react": "^0.4.0",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.0",
