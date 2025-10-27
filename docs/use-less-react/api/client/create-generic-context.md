@@ -25,7 +25,14 @@ function Profile() {
   const userInstance = useUser();
 
   // useReactiveInstance for reactivity
-  const { state: user } = useReactiveInstance(userInstance, ["name", "age"]);
+  const { state: user } = useReactiveInstance(
+    userInstance, 
+    (instance) => ({
+      name: instance.name,
+      age: instance.age,
+    }),
+    ["name", "age"],
+  );
 
   return <div>{user.name} is {user.age} years old</div>;
 }

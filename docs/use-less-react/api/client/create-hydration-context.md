@@ -113,9 +113,13 @@ export const HomepageClientSideComponent: FC = () => {
 
   // use a specific instance with useReactiveInstance
   const {
-    state: { position },
+    state: position,
     instance: playerSprite,
-  } = useReactiveInstance(hydratedInstances.playerSprite, ["position"]);
+  } = useReactiveInstance(
+    hydratedInstances.playerSprite, 
+    (instance) => instance.position, 
+    ["position"],
+  );
 
   return (
     <div>

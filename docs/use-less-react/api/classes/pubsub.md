@@ -33,7 +33,11 @@ const counter = new Counter();
 import { useReactiveInstance } from '@dxbox/use-less-react/hooks';
 
 function CounterComponent({ counter }: { counter: Counter }) {
-  const { state: { count } } = useReactiveInstance(counter, ['count']);
+  const { state: count } = useReactiveInstance(
+    counter,
+    (instance) => instance.count,
+    ['count'],
+  );
 
   return (
     <div>

@@ -6,9 +6,9 @@
 
 This hook bridges the gap between **object-oriented state management** and React’s declarative rendering model — without relying on dedicated state libraries or context boilerplate.
 
-It uses [`use-immer`](https://www.npmjs.com/package/use-immer) under the hood to ensure immutability of the returned values, in order to guarantee reactivity.
+It uses [`useSyncExternalStore`](https://react.dev/reference/react/useSyncExternalStore) under the hood to ensure reactivity of the returned values and avoid [tearing](https://github.com/reactwg/react-18/discussions/69).
 
-It ensures that updates from your reactive instances propagate to React only when relevant data changes, minimizing unnecessary re-renders and improving performance.
+It should be given an array of dependencies as last param to make sure that updates from your reactive instances propagate to React only when relevant data changes, minimizing unnecessary re-renders and improving performance.
 
 ---
 
@@ -28,11 +28,15 @@ class Counter extends PubSub {
 }
 
 export function CounterComponent() {
-  const { state, instance } = useReactiveInstance(() => new Counter(), ["count"]);
+  const { state: count, instance } = useReactiveInstance(
+    () => new Counter(),
+    (instance) => instance.count,
+    ["count"] // the dependencies of the getSnapshot function
+  );
 
   return (
     <div>
-      <p>Count: {state.count}</p>
+      <p>Count: {count}</p>
       <button onClick={() => instance.increment()}>+</button>
     </div>
   );
@@ -48,21 +52,41 @@ import PubSubPlayground from '../../playgrounds/pubsub';
 
 <PubSubPlayground />
 
+## Using `useReactiveInstance` passing `null` as dependencies
+
+It's possible, although not recommended, to pass `null` as the value of the `dependencies` prop:
+
+```tsx
+
+const { state: count, instance } = useReactiveInstance(
+  () => new Counter(),
+  (instance) => instance.count,
+  null
+);
+```
+It's a required prop, because we want to make it explicit if we're opting out of the built-in dependencies optimization. There may be cases in which it makes sense, for example if you want to track any changes, call the `dehydrate` function of an instance whenever any attributes get notified, and keep a history of snapshots - something similar to a Memento pattern. But in most cases, you want to track a few attributes and get a snapshot only when those properties change: so please use the built-in optimization!
+
 ---
 
 ## Parameters
 
 ```ts
-const { state, instance } = useReactiveInstance<T>(
-  instanceGetter: instanceGetter: TClass | (() => TClass),
-  keys: (keyof TClass)[]
+const { state, instance } = useReactiveInstance<
+  TClass extends Subscribable,
+  K extends (keyof TClass)[],
+  RType extends SnapshotProps,
+>(
+  instanceGetter: TClass | (() => TClass),
+  getSnapshot: GetSnapshot<TClass, RType>,
+  dependencies: K | null,
 );
 ```
 
 | Parameter | Type | Required | Description |
 |------------|------|-----------|-------------|
 | `instanceGetter` | `TClass \| (() => TClass)` | ✅ | An instance, or a function returning a new instance of your reactive class. If a function is passed, it’s invoked only once per component lifecycle.|
-| `keys` | `(keyof TClass)[]` | ✅ | The list of reactive property keys you want the component to listen to. |
+| `getSnapshot` | `GetSnapshot<TClass, RType>` | ✅ | A function returning a state made of primitive values (`string`, `number`, `boolean`, `symbol`, or objects and arrays made of primitive or composed values. TLDR: don't return class instances here)
+| `keys` | `(keyof TClass)[] \| null` | ✅ | The list of reactive property keys you want the component to listen to. |
 
 ---
 
@@ -70,7 +94,7 @@ const { state, instance } = useReactiveInstance<T>(
 
 | Property | Type | Description |
 |-----------|------|-------------|
-| `state` | `Pick<TClass, TDep>` | A snapshot of the reactive properties specified in the second argument. React components can safely read from it without causing extra reactivity. |
+| `state` | `RType extends SnapshotProps` | The snapshot returned by the function specified in the second argument. |
 | `instance` | `TClass` | The original instance of the reactive class (generic `TClass`). Use it to call methods, or read non-reactive fields.|
 
 ---

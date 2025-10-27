@@ -104,10 +104,11 @@ import { useReactiveInstance } from '@dxbox/use-less-react/client';
 function MyDropdown() {
   // Create a LOCAL, reactive instance of this state.
   const { 
-    state: { isOpen },
+    state: isOpen,
     instance: menu,
     } = useReactiveInstance(
       () => new MenuState(),
+      (instance) => instance.isOpen
       ["isOpen"]
     );
 
@@ -171,9 +172,10 @@ function MyDropdown() {
   const menu = useMenuState();
   
    const { 
-    state: { isOpen },
+    state: isOpen,
   } = useReactiveInstance(
     menu, // pass the instance here instead of creating it via instance getter
+    (instance) => instance.isOpen,
     ["isOpen"]
   );
 

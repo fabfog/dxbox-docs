@@ -9,10 +9,11 @@ import { Counter } from "/counter.ts";
 
 export default function App() {
   const {
-    state: { count }, 
+    state: count, 
     instance,
   } = useReactiveInstance(
     () => new Counter(),
+    (instance) => instance.count,
     ["count"]
   );
 

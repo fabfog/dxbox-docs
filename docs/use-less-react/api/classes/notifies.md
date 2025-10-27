@@ -27,7 +27,11 @@ class Counter extends PubSub {
 }
 
 // Usage in React
-const { state } = useReactiveInstance(() => new Counter(), ["count"]);
+const { state: count } = useReactiveInstance(
+  () => new Counter(), 
+  (instance) => instance.count,
+  ["count"],
+);
 ```
 
 When `increment()` or `reset()` is called, any subscribed components will automatically re-render with the updated `count` value.
