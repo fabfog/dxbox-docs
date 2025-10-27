@@ -89,7 +89,7 @@ import { PubSub, Notifies } from '@dxbox/use-less-react/classes';
 class MenuState extends PubSub{
   isOpen = false;
 
-  @Notifies("isOpen)
+  @Notifies("isOpen")
   toggle() {
     this.isOpen = !this.isOpen;
   }
