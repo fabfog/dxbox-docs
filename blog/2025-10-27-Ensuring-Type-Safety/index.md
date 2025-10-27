@@ -1,6 +1,6 @@
 ---
 slug: ensuring-type-safety-the-zod-first-pattern-for-secure-state-hydration
-title: Ensuring Type Safety: The Zod-First Pattern for Secure State Hydration
+title: "Ensuring Type Safety: The Zod-First Pattern for Secure State Hydration"
 authors: [fabfog]
 date: "2025-10-27"
 tags: [use-less-react]
@@ -107,7 +107,7 @@ This library's core responsibility is managing reactive state propagation. Valid
 
 Modularity: By keeping the library simple, we encourage the developer to choose the tool that best fits their domain. The Class-based design simply provides the perfect structural hook — the static `hydrate` method — where any validation logic can be cleanly and purely injected and tested, without cluttering the framework's core.
 
------
+---
 
 ## TLDR;
 
