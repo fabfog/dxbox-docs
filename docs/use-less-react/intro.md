@@ -32,7 +32,7 @@ In short: *React renders; classes think.*
 - **Immutability safety** – Optional deep immutability decorator prevents accidental state mutations. And you can disable it in production, to avoid performance loss.
 - **Decorator-based syntax** – Expressive, readable, and minimal.
 - **Easy to test** – Test your logics without having to install specific libraries for testing hooks.
-- **Tiny footprint** – Less than 8kB minified and gzipped.
+- **Tiny footprint** – ~3.3kB minified. ~1.6kB minified and gzipped.
 
 ---
 
