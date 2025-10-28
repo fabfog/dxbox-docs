@@ -41,7 +41,7 @@ Placing logic in a class achieves **decoupling** at the highest level:
 | Feature | Custom Hook Logic | Class-Based Domain Logic |
 | :--- | :--- | :--- |
 | **Lifespan** | Tied to the Component's mounting/unmounting. | **Independent.** Can live outside a React component, i.e. a Node application. |
-| **Instatiation** | Re-instantiated/re-evaluated on every component re-render. | **Stable Instance.** Constructed once. |
+| **Instantiation** | Re-instantiated/re-evaluated on every component re-render. | **Stable Instance.** Constructed once. |
 | **Logic Purpose**| Subordinate to the view layer's needs. | **Independent Entity.** Focuses solely on business invariants and data integrity. |
 
 The class instance becomes a **stable service or entity** that can persist across different component mounts, navigations, or even entire application state resets, providing a unified source of truth for its domain.
