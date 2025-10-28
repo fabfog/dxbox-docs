@@ -73,7 +73,9 @@ In this scenario, the junior developer uses `use-less-react`. All filtering, dat
 // File: items-manager.ts (pure logic)
 export class ItemsManager<TApiService extends ApiService> extends PubSub {
     private _filters: FiltersType = {};
-    private _data: DataType | null = null;
+    private _data: DataType | null = null;    
+    private _error: Error | null = null;
+
     public isLoading = false;
 
     constructor(private apiService: TApiService) {
@@ -82,6 +84,10 @@ export class ItemsManager<TApiService extends ApiService> extends PubSub {
 
     get data() {
       return this._data;
+    }
+
+    get error() {
+      return this._error;
     }
 
     get filters() {
@@ -102,8 +108,9 @@ export class ItemsManager<TApiService extends ApiService> extends PubSub {
         const result = await this.apiService.getItems(this._filters);
         this._data = result.data;
       } catch (err) {
-        this.data = null;
-        this.error = err;
+        this._data = null;
+        this._error = err;
+        this.notify("error");
       } finally {
         this.isLoading = false;
         this.notify("data");
@@ -113,7 +120,8 @@ export class ItemsManager<TApiService extends ApiService> extends PubSub {
     
     @DependsOn("data")
     public get groupedItems() {
-      return groupBySomething(this._data); 
+      if (!this._data) return null;
+      return groupBySomething(this._data);
     }
 }
 
