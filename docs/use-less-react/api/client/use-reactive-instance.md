@@ -52,20 +52,6 @@ import PubSubPlayground from '../../playgrounds/pubsub';
 
 <PubSubPlayground />
 
-## Using `useReactiveInstance` passing `null` as dependencies
-
-It's possible, although not recommended, to pass `null` as the value of the `dependencies` prop:
-
-```tsx
-
-const { state: count, instance } = useReactiveInstance(
-  () => new Counter(),
-  (instance) => instance.count,
-  null
-);
-```
-It's a required prop, because we want to make it explicit if we're opting out of the built-in dependencies optimization. There may be cases in which it makes sense, for example if you want to track any changes, call the `dehydrate` function of an instance whenever any attributes get notified, and keep a history of snapshots - something similar to a Memento pattern. But in most cases, you want to track a few attributes and get a snapshot only when those properties change: so please use the built-in optimization!
-
 ---
 
 ## Parameters
@@ -78,7 +64,7 @@ const { state, instance } = useReactiveInstance<
 >(
   instanceGetter: TClass | (() => TClass),
   getSnapshot: GetSnapshot<TClass, RType>,
-  dependencies: K | null,
+  dependencies: K,
 );
 ```
 
@@ -86,7 +72,7 @@ const { state, instance } = useReactiveInstance<
 |------------|------|-----------|-------------|
 | `instanceGetter` | `TClass \| (() => TClass)` | ✅ | An instance, or a function returning a new instance of your reactive class. If a function is passed, it’s invoked only once per component lifecycle.|
 | `getSnapshot` | `GetSnapshot<TClass, RType>` | ✅ | A function returning a state made of primitive values (`string`, `number`, `boolean`, `symbol`, or objects and arrays made of primitive or composed values. TLDR: don't return class instances here)
-| `keys` | `(keyof TClass)[] \| null` | ✅ | The list of reactive property keys you want the component to listen to. |
+| `keys` | `(keyof TClass)[]` | ✅ | The list of reactive property keys you want the component to listen to. |
 
 ---
 
