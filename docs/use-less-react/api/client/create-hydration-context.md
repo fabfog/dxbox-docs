@@ -31,7 +31,7 @@ export class Sprite extends PubSub {
   }
 
   // this method will create an instance from a plain object
-  static hydrate(obj: object) {
+  static hydrate(obj: object): Sprite {
     if (
       "x" in obj &&
       typeof obj.x === "number" &&
@@ -44,7 +44,7 @@ export class Sprite extends PubSub {
   }
 
   // this method will serialize an instance to a plain object
-  dehydrate() {
+  dehydrate(): object {
     return {
       x: this.x,
       y: this.y,

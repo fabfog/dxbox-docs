@@ -13,11 +13,11 @@ class UserStore {
 
   static readonly serialName: string = "UserStore";
 
-  hydrate(data) {
+  static hydrate(data: object): UserStore {
     this.name = data.name;
   }
 
-  dehydrate() {
+  dehydrate(): object {
     return { name: this.name };
   }
 }
