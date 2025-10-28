@@ -2,7 +2,7 @@
 slug: architectural-guardrails-how-clean-separation-of-concerns-dramatically-simplifies-pr-reviews
 title: "Architectural Guardrails: How Clean Separation of Concerns Dramatically Simplifies PR Reviews"
 authors: [fabfog]
-date: "2025-10-29"
+date: "2025-10-28"
 tags: [use-less-react]
 ---
 # Architectural Guardrails: How Clean Separation of Concerns Dramatically Simplifies PR Reviews
@@ -107,17 +107,19 @@ export class ItemsManager<TApiService extends ApiService> extends PubSub {
       try {
         const result = await this.apiService.getItems(this._filters);
         this._data = result.data;
+        this._error = null;
       } catch (err) {
         this._data = null;
         this._error = err;
-        this.notify("error");
       } finally {
         this.isLoading = false;
-        this.notify("data");
-        this.notify("isLoading");
+         // or just use @Notifies("isLoading", "error", "data") on top of the method
+        this.notify("isLoading", "error", "data");
       }
     }
     
+    // everytime data gets notified, also groupedItems will be notified
+    // but it will be actually recalculated only if someone is subscribed to it!
     @DependsOn("data")
     public get groupedItems() {
       if (!this._data) return null;
@@ -213,7 +215,7 @@ test('useAsyncData should fetch and set data after initial render', async () => 
 });
 ```
 
-**Cost of Testing:** High. The test code is polluted by React lifecycle utilities (`renderHook`, `act`, `waitForNextUpdate`), obscuring the business logic being tested. You end up testing the test because you're not sure you had to call for `waitForNextUpdate` *like this* or *like that*. The test needs to mock a global API (`fetch`) which is a brittle form of dependency mocking. And personally speaking, if I spend two weeks without writing tests, I'll have troubles remembering the syntax of all those testing utilities. Which makes me think "I *have to* write tests, but how will it take?"
+**Cost of Testing:** High. The test code is polluted by React lifecycle utilities (`renderHook`, `act`, `waitForNextUpdate`), obscuring the business logic being tested. You end up testing the test because you're not sure whether you had to call for `waitForNextUpdate` *like this* or *like that*. The test needs to mock a global API (`fetch`) which is a brittle form of dependency mocking. And personally speaking, if I spend two weeks without writing tests, I'll have troubles remembering the syntax of all those testing utilities. Which makes me think "I *have to* write tests, but how long will it take?"
 
 ### Testing the Decoupled Domain (Pure Unit Tests via Dependency Injection)
 
@@ -250,7 +252,7 @@ test('ItemsManager should fetch data and update state flags correctly', async ()
 });
 ```
 
-**Cost of Testing:** Low. The test file is clean, fast, and completely free of React utilities. By using Dependency Injection, mocking is precise and local, guaranteeing that the business logic is tested in isolation from the external service implementation.
+**Cost of Testing:** Low. The test file is flat, clean, fast to write, easy to understand, and completely free of React utilities. By using Dependency Injection, mocking is precise and local, guaranteeing that the business logic is tested in isolation from the external service implementation.
 
 ## Conclusion: Reducing the Scope of Inspection
 

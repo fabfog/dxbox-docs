@@ -2,7 +2,7 @@
 slug: ensuring-type-safety-integrating-zod-for-secure-state-hydration
 title: "Ensuring Type Safety: Integrating Zod for Secure State Hydration"
 authors: [fabfog]
-date: "2025-10-27"
+date: "2025-10-26"
 tags: [use-less-react]
 ---
 # Ensuring Type Safety: Integrating Zod for Secure State Hydration

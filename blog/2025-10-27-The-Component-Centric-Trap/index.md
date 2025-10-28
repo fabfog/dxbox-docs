@@ -2,7 +2,7 @@
 slug: the-component-centric-trap-why-domain-logic-needs-its-own-lifecycle
 title: "The Component-Centric Trap: Why Domain Logic Needs Its Own Lifecycle"
 authors: [fabfog]
-date: "2025-10-28"
+date: "2025-10-27"
 tags: [use-less-react]
 ---
 # The Component-Centric Trap: Why Domain Logic Needs Its Own Lifecycle

@@ -41,9 +41,9 @@ In `use-less-react`, your business logic lives in classes — clean, easy to tes
 Your React components will simply *observe* them and... well, do their job: *react* to changes.
 
 The library connects the two worlds: when your class updates, your component automatically re-render.  
-No context juggling, no immutability gymnastics, no endless `useEffect` chains.
+No context juggling, no memoization gymnastics, no endless `useEffect` chains.
 
-It’s **object-oriented reactivity**, and it feels powerful, because you are able to use the full spectrum of OOP principles and design patterns.
+It’s **object-oriented reactivity** and it feels powerful, because you are able to use the full spectrum of OOP principles and design patterns.
 
 ---
 
@@ -54,18 +54,18 @@ But as our apps grow, our state logic gets tangled between hooks, reducers, effe
 
 **`use-less-react`** brings focus back to **clarity and maintainability**:
 - You model your domain as classes.
-- You declare which fields are reactive.
+- You decide when a field gets notified (meaning its value has changed).
 - You let the UI update itself.
 
 No framework magic. No rebuild of React’s internals.  
-Just predictable, maintainable code.
+Just predictable, testable, maintainable code.
 
 ---
 
 ## Why developers will love it
 
-- ⚡ **Fast and lightweight** – only ~8kB gzipped
-- 🧠 **Zero learning curve** – just use classes and decorators
+- ⚡ **Fast and lightweight** – only ~1.6 kB minified and gzipped
+- 🧠 **Zero learning curve** – just use classes and, optionally, a couple decorators
 - 💬 **Framework agnostic logic** – your classes work even outside React
 - 🔄 **Truly reactive UI** – components update *only* when they need to
 - 🧩 **Plug-and-play contexts** – hydrate instances, share data, and keep types safe
