@@ -166,7 +166,7 @@ The review is split into two distinct, manageable phases with strict boundaries:
       * **Check:** Are the dependencies in `useReactiveInstance` correct (`processedItems`, `isLoading`)? Of course they are: this is enforced by TypeScript. Is the `FiltersForm` correctly calling a **stable, external method** (`manager.fetchItems`)? Yes, it comes from a vanilla class. No `useCallback`s, no flying functions, no changing references.
       * **Conclusion:** The component is valid. Its responsibilities are met.
 
-2.  **Inspect `ItemManager.ts` (the domain):**
+2.  **Inspect `items-manager.ts` (the domain):**
 
       * **Goal:** Verify business logic integrity, resource management, and dependency usage.
       * **Check:** Does the class use the injected `apiService`? Yes. Does it handle the state transition (`isLoading` set to true/false) correctly around the `await` call? Yes. Does it notify the updated properties when they change? Yes. The logic is clean.
