@@ -41,9 +41,9 @@ const FeatureComponent = ({ initialFilters, withAutoUpdate }) => {
 
   return (
     <div>
-      <FiltersToolbar onUpdate={setFilters}>
+      <FiltersForm onUpdate={setFilters}>
         {filtersItems}
-      </FiltersToolbar>
+      </FiltersForm>
       {isReady && <DataList items={memoizedData} />}
     </div>
   );
@@ -134,13 +134,13 @@ const FeatureComponent = () => {
   // Simple declaration of state required for rendering this component
   const { state: { items, loading } } = useReactiveInstance(
     managerInstance,
-    ({ filters, processData, isLoading, error }) => ({
+    ({ filters, processedData, isLoading, error }) => ({
       filters,
-      processData,
+      processedData,
       isLoading,
       error,
     }),
-    ['processData', 'isLoading', 'filters', 'error']
+    ['processedData', 'isLoading', 'filters', 'error']
   );
 
   // The component is purely view logic
@@ -150,10 +150,8 @@ const FeatureComponent = () => {
 
   return (
     <div>
-      <FiltersToolbar onUpdate={managerInstance.fetchItems}>
-        <FilterItems items={filters} />
-      </FiltersToolbar>
-      {processData && <DataList items={processData} />}
+      <FiltersForm filters={filters} onSubmit={managerInstance.fetchItems} />
+      {processedData && <DataList items={processedData} />}
     </div>
   );
 };
@@ -165,7 +163,7 @@ The review is split into two distinct, manageable phases with strict boundaries:
 
 1.  **Inspect `feature-component.tsx` (the view):**
       * **Goal:** Verify that the component correctly maps domain state to UI elements.
-      * **Check:** Are the dependencies in `useReactiveInstance` correct (`processedItems`, `isLoading`)? Of course they are: this is enforced by TypeScript. Is the `FilterUI` correctly calling a **stable, external method** (`manager.fetchItems`)? Yes, it comes from a vanilla class. No `useCallback`s, no flying functions, no changing references.
+      * **Check:** Are the dependencies in `useReactiveInstance` correct (`processedItems`, `isLoading`)? Of course they are: this is enforced by TypeScript. Is the `FiltersForm` correctly calling a **stable, external method** (`manager.fetchItems`)? Yes, it comes from a vanilla class. No `useCallback`s, no flying functions, no changing references.
       * **Conclusion:** The component is valid. Its responsibilities are met.
 
 2.  **Inspect `ItemManager.ts` (the domain):**
