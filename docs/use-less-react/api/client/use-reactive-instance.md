@@ -71,7 +71,7 @@ const { state, instance } = useReactiveInstance<
 | Parameter | Type | Required | Description |
 |------------|------|-----------|-------------|
 | `instanceGetter` | `TClass \| (() => TClass)` | ✅ | An instance, or a function returning a new instance of your reactive class. If a function is passed, it’s invoked only once per component lifecycle.|
-| `getSnapshot` | `GetSnapshot<TClass, RType>` | ✅ | A function returning a state made of primitive values (`string`, `number`, `boolean`, `symbol`, or objects and arrays made of primitive or composed values. TLDR: don't return class instances here)
+| `getSnapshot` | `GetSnapshot<TClass, RType>` | ✅ | A function returning a state made of primitive values (`string`, `number`, `boolean`, `symbol`, `bigint`, `null`, `undefined`) or objects and arrays made of primitive or composed values. Supports promises of aforementioned types. Do not use other classes like Maps, Sets, custom classes, etc.)
 | `keys` | `(keyof TClass)[]` | ✅ | The list of reactive property keys you want the component to listen to. |
 
 ---
