@@ -1,6 +1,5 @@
 ---
 slug: architectural-guardrails-how-clean-separation-of-concerns-dramatically-simplifies-pr-reviews
-title: "Architectural Guardrails: How Clean Separation of Concerns Dramatically Simplifies PR Reviews"
 authors: [fabfog]
 date: "2025-10-28"
 tags: [use-less-react]

@@ -1,6 +1,5 @@
 ---
 slug: the-boilerplate-tax
-title: The Boilerplate Tax 💸
 authors: [fabfog]
 date: "2025-10-24"
 tags: [use-less-react]

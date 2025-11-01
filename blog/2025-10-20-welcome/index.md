@@ -1,6 +1,5 @@
 ---
 slug: introducing-use-less-react
-title: "Introducing @dxbox/use-less-react"
 authors: ["fabfog"]
 date: "2025-10-20"
 tags: ["use-less-react"]
