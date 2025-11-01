@@ -154,7 +154,7 @@ export type AuthConfig = InitializingConfig & LoginConfig & AuthenticatedConfig;
 export class AuthFlowManager extends PubSub implements FSMContext<AuthConfig> {
   private _currentState: FSMState<AuthConfig>;
   private _error: Error | null;
-  private _session: Session | null = null
+  private _session: Session | null;
 
   constructor(initialState?: FSMState<AuthConfig>) {
     super();
@@ -203,11 +203,12 @@ export class AuthFlowManager extends PubSub implements FSMContext<AuthConfig> {
   }
 }
 ```
-Quick, powerful, and - most importantly: to add new states, the only line of code you'll need to change is this one
+Quick, powerful and, most importantly: to add new states, the only line of code you'll need to change is this one
 
 ```typescript
 export type AuthConfig = InitializingConfig & LoginConfig & AuthenticatedConfig;
 ```
+
 like this:
 
 ```typescript
@@ -260,6 +261,7 @@ export const AuthConnector: FC = () => {
         <h1>{currentState.name}</h1>{isLoading && <Spinner />}
       </div>
 
+      // of course you can use use-less-react's GenericContext to share authManager without prop-drilling
       {currentState.name === 'login' && <LoginComponent authManager={authManager} />}
       {currentState.name === 'profile-pending' && <ProfilePendingComponent authManager={authManager} />}
       {currentState.name === '2fa' && <TwoFAComponent authManager={authManager} />}
@@ -345,9 +347,9 @@ export const LoginConnector: FC<LoginConnectorProps> = ({ authManager }) => {
 The central hook approach couples the UI layer, the state data, and the business logic. It will be difficult to write, debug and test. Just thinking of all the `act` and `waitForNextUpdate` calls inside the tests should give you headache.
 
 The State Pattern powered by `use-less-react` clearly separates the concerns, leaving the UI lightweight and the business logic robust and future-proof. Adding 2FA or handling the "complete profile" step is now a matter of writing one new class and changing a couple lines in the context file (the import of the new state type and adding it to the possible states type). You will "wire" the new state to the old ones - but only to those states that actually have transitions to it.
-Lastly, the behavior of the FSM flow will be testable even state-by-state, or you could initialize your FSM in any given state to test specific transitions.
+Lastly, the behavior of the FSM flow will be testable even state-by-state, and you can initialize your FSM in any given state to test specific transitions.
 
-The changes will be local and you won't need to savage your old code - you will act like a surgeon, not like a butcher.
+The changes to introduce new transitions will be local and you won't need to savage all your old code - you will act like a surgeon, not like a butcher.
 
 ## Ok, but what about the types you used?
 
