@@ -65,6 +65,12 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      metadata: [
+        {
+          name: 'robots',
+          content: 'index, follow', 
+        },
+      ],
       colorMode: {
         respectPrefersColorScheme: true,
       },

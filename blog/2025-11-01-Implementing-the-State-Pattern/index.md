@@ -70,7 +70,7 @@ const login = async (email: string, password: string) => {
 useEffect(() => {
   if (!is2FASet(user)) { 
     setStatus('2fa-required')
-  } else if (!user.profileComplete) {
+  } else if (!isProfileComplete(user)) {
     setStatus('pending-profile'); 
   } else {
     setStatus('authenticated');
