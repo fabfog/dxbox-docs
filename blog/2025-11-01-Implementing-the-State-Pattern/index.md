@@ -294,9 +294,8 @@ export const LoginComponent: FC<LoginComponentProps> = ({ authManager }) => {
 
   const {
     state: { error },
-    instance: authManager,
   } = useReactiveInstance(
-    () => new AuthFlowManager(),
+    authManager,
     (authManager) => ({
       error: authManager.error,
     }),
