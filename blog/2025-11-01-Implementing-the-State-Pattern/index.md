@@ -260,7 +260,7 @@ export const AuthConnector: FC = () => {
   return (
     <div>
       <div>
-        <h1>{currentState.name}</h1>{isLoading && <Spinner />}
+        <h1>{currentState.name}</h1>
       </div>
 
       // of course you can use use-less-react's GenericContext to share authManager without prop-drilling
