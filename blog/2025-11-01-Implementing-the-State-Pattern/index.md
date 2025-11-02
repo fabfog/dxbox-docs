@@ -101,7 +101,7 @@ Here's the code for the `LoginState`:
 
 ```typescript
 import { AuthConfig } from '../auth-flow';
-import { FSMContext, FSMState, StateConfig } from '../types';
+import { FSMContext, FSMState, FSMStateConfig } from '../types';
 import { AuthenticatedState } from './authenticated';
 
 export type LoginPayload = {
@@ -111,7 +111,7 @@ export type LoginPayload = {
 };
 
 // we'll use this type to let our FSM know what are the possible states
-export type LoginConfig = StateConfig<'login', LoginPayload>;
+export type LoginConfig = FSMStateConfig<'login', LoginPayload>;
 
 export class LoginState implements FSMState<LoginConfig> {
   name = 'login' as const;
@@ -359,26 +359,23 @@ Here they are:
 
 ```tsx
 // File: types.ts
-export type StateConfig<TName extends PropertyKey, TPayload> = Record<TName, TPayload>;
+export type FSMStateConfig<TName extends PropertyKey, TPayload> = Record<TName, TPayload>;
 
 export type FSMState<TStateConfig> =
-  TStateConfig extends StateConfig<infer TName, infer TPayload>
+  TStateConfig extends FSMStateConfig<infer TName, infer TPayload>
     ? {
         name: TName;
         handleNext(context: FSMContext<TStateConfig>, payload: TPayload): Promise<void>;
       }
     : never;
 
-export type FSMContext<TConfig> =
-  TConfig extends StateConfig<PropertyKey, unknown>
-    ? {
-        dispatch<T extends keyof TConfig>(payload: TConfig[T]): Promise<void>;
-        transitionTo(state: FSMState<TConfig>): void;
-      }
-    : never;
+export type FSMContext<TConfig extends FSMStateConfig<PropertyKey, unknown>> = {
+  dispatch<T extends keyof TConfig>(payload: TConfig[T]): Promise<void>;
+  transitionTo(state: FSMState<TConfig>): Promise<void>;
+};
 ```
 
-While these generic type definitions (`StateConfig`, `FSMState`, and `FSMContext`) may appear abstract and complex, particularly to those less familiar with advanced TypeScript features, they represent a critical investment in architectural quality.
+While these generic type definitions (`FSMStateConfig`, `FSMState`, and `FSMContext`) may appear abstract and complex, particularly to those less familiar with advanced TypeScript features, they represent a critical investment in architectural quality.
 
 These three types collectively **encapsulate the entire FSM contract**, adhering to a single, clear responsibility: enforcing strict, compile-time validation of state transitions and payloads across the entire application. 
 
