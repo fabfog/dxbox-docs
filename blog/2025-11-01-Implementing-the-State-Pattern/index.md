@@ -350,7 +350,19 @@ The central hook approach couples the UI layer, the state data, and the business
 The State Pattern powered by `use-less-react` clearly separates the concerns, leaving the UI lightweight and the business logic robust and future-proof. Adding 2FA or handling the "complete profile" step is now a matter of writing one new class and changing a couple lines in the context file (the import of the new state type and adding it to the possible states type). You will "wire" the new state to the old ones - but only to those states that actually have transitions to it.
 Lastly, the behavior of the FSM flow will be testable even state-by-state, and you can initialize your FSM in any given state to test specific transitions.
 
-The changes to introduce new transitions will be local and you won't need to savage all your old code - you will act like a surgeon, not like a butcher.
+For example:
+```ts
+it("should transition from login state to authenticated state", () => {
+  const instance = new AuthFlowManager(new LoginState());
+  expect(instance.currentState.name).toBe("login");
+
+  await instance.dispatch<"login">({ intent: "submit", email: "fake@mail.com", password: "1234" });
+  expect(instance.currentState.name).toBe("authenticated");
+});
+```
+Pretty simple, compared to testing a React hook, right?
+
+When adding new states and transitions, the changes will be few and local, and you won't need to savage all your old code - you will act like a surgeon, not like a butcher.
 
 ## Ok, but what about the types you used?
 
