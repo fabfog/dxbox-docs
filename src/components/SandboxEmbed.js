@@ -23,8 +23,7 @@ export function SandboxEmbed({ files, height = "100%", template = "react" }) {
               react: "19.1",
               "react-dom": "19.1",
               "@dxbox/use-less-react": "latest",
-              "use-immer": "0.11",
-              "immer": "10.1"
+              "fast-deep-equal": "3.1.3"
             }
           }}
           style={{ height }}
