@@ -30,6 +30,13 @@ Please note what follows:
 3. you should define `serialName` as `string` or TypeScript will infer its value as its type (because it's static)
 4. when adding a class to `serializableClassesRegistry`, use `serialName` as key (see below)
 
+```ts
+// serializable-classes-registry.ts
+export const serializableClassesRegistry: SerializableClassesRegistry = {
+  [Sprite.serialName]: Sprite,
+};
+```
+
 ### Properties
 | Property | Type | Description |
 |-----------|------|-------------|
