@@ -44,6 +44,13 @@ const sidebars = {
 
           ]
         },
+        {
+          type: 'category',
+          label: 'Design Patterns',
+          items: [
+            'use-less-react/api/patterns/state',
+          ]
+        },
       ]
     },
     // 'use-less-react/faq',
