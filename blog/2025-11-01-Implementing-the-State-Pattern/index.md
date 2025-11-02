@@ -188,18 +188,20 @@ export class AuthFlowManager extends PubSub implements FSMContext<AuthConfig> {
     return this._error;
   }
 
-  @Notifies("error")
+  // use this.notify instead of Notifies for setters methods
   public set error(err: Error | null) {
     this._error = err;
+    this.notify("error");
   }
 
   public get session() {
     return this._session;
   }
 
-  @Notifies("session")
+  // use this.notify instead of Notifies for setters methods
   public set session(session: Session | null) {
     this._session = session;
+    this.notify("session");
   }
 }
 ```
