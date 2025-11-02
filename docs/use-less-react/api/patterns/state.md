@@ -73,9 +73,15 @@ This **asynchronous** method must be called immediately after instantiation.
 
 ```typescript
 // Example usage:
-const manager = new FSMContextManager(new InitializingState());
+const manager = new FSMContextManager();
 // Essential call to start the FSM
 await manager.initialize(); 
+```
+
+or, since initialize returns `this`:
+
+```typescript
+const manager = await new FSMContextManager().initialize();
 ```
 
 #### `dispatch<T extends keyof TConfig>(payload: TConfig[T]): Promise<void>`
