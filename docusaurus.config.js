@@ -44,6 +44,12 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
         },
+        ...(process.env.GOOGLE_ANALYTICS_TRACKING_ID ? {
+          googleAnalytics: {
+            trackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
+            anonymizeIP: true,
+          }
+        } : {}),
         blog: {
           showReadingTime: true,
           feedOptions: {

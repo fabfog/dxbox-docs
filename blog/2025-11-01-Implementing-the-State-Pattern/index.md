@@ -87,7 +87,7 @@ Are we truly following the right architectural path for managing complex, evolvi
 
 The answer is no. With **use-less-react**, you can manage this exact problem using a powerful object-oriented design pattern: the **State Pattern**, implemented as a **Finite State Machine (FSM)**. This approach uses the power of Object-Oriented Programming (OOP) to encapsulate behavior, making your logic robust, extensible, and easy to test.
 
------
+<!-- truncate -->
 
 ## The FSM Solution with `use-less-react`
 
