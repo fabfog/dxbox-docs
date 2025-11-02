@@ -274,18 +274,18 @@ export const AuthConnector: FC = () => {
 
 
 ```tsx
-// File: auth.connector.tsx (Declarative View)
+// File: login.component.tsx (Declarative View)
 'use client';
 
 import { AuthFlowManager } from '@/modules/auth';
 import { useReactiveInstance } from '@dxbox/use-less-react/client';
 import { FC, useState } from 'react';
 
-export interface LoginConnector {
+export interface LoginComponentProps {
   authManager: AuthFlowManager;
 }
 
-export const LoginConnector: FC<LoginConnectorProps> = ({ authManager }) => {
+export const LoginComponent: FC<LoginComponentProps> = ({ authManager }) => {
   // you should use a more complex form with validations, this is just a basic example
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
