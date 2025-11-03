@@ -51,6 +51,8 @@ const config = {
           }
         } : {}),
         blog: {
+          blogSidebarTitle: 'Blog posts',
+          blogSidebarCount: 'ALL',
           showReadingTime: true,
           feedOptions: {
             type: ['rss', 'atom'],

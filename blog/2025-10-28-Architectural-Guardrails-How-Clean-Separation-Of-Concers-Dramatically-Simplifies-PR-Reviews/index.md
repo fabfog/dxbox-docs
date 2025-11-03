@@ -18,6 +18,8 @@ This post contrasts two architectural approaches to demonstrate how **Separation
 
 Imagine a PR submitted by a junior developer for a new feature. The core logic is housed in a single component file, putting together data and logics from different hooks.
 
+<!-- truncate -->
+
 ### Code Example: The Coupled Component
 
 ```tsx
