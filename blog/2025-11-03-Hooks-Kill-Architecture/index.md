@@ -1,5 +1,5 @@
 ---
-slug: hooks-kill-architecture-the-price-of-sacrificing-of-classes
+slug: hooks-kill-architecture-the-price-of-sacrificing-classes
 authors: [fabfog]
 date: "2025-11-03"
 tags: [use-less-react]
