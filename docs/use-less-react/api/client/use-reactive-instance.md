@@ -15,8 +15,8 @@ It should be given an array of dependencies as last param to make sure that upda
 ## Example
 
 ```tsx
-import { useReactiveInstance } from "use-less-react";
-import { PubSub, Notifies } from "use-less-react";
+import { useReactiveInstance } from "@dxbox/use-less-react";
+import { PubSub, Notifies } from "@dxbox/use-less-react";
 
 class Counter extends PubSub {
   count = 0;

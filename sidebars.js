@@ -49,6 +49,7 @@ const sidebars = {
           label: 'Design Patterns',
           items: [
             'use-less-react/api/patterns/state',
+            'use-less-react/api/patterns/memento',
           ]
         },
       ]
