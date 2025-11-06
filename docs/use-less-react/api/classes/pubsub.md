@@ -1,8 +1,8 @@
-# PubSub and GenericPubSub<T>
+# PubSub and GenericPubSub
 
 Lightweight reactive event emitter designed for fine-grained UI reactivity and class-based data models.
 
-GenericPubSub is just a generic version of PubSub, for when you need to explicitly define the notifiable keys.
+`GenericPubSub<T>` is just a generic version of PubSub, for when you need to explicitly define the notifiable keys.
 
 ---
 
