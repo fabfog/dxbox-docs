@@ -65,12 +65,13 @@ export interface TextEditorState {
 // TMemento is not specified, therefore it's defaulted to TextEditorState
 export class TextEditorOriginator extends BaseOriginator<TextEditorState> {
   // Internal state
-  text: string = "";
+  _text: string = "";
 
-  // Standard setters/getters
-  override setState(state: TextEditorState): void {
-    this.text = state.text;
+  set text(v: string) {
+    this._text = v;
+    this.notify("text");
   }
+
   override getState(): TextEditorState {
     // Crucial for immutability: returns a new object.
     return { text: this.text };
@@ -84,7 +85,7 @@ export class TextEditorOriginator extends BaseOriginator<TextEditorState> {
 
   // 4. Restore: Simply replace the state with the snapshot.
   public restoreMemento(memento: TextEditorState): void {
-    this.setState(memento);
+    this.text = state.text;
   }
 }
 
@@ -118,15 +119,20 @@ export interface TextEditorState {
 }
 
 export interface TextEditorMemento {
-  diff: Delta; // Delta is the type used by jsondiffpatch for the difference object
+  delta: Delta; // Delta is the type used by jsondiffpatch for the difference object
 }
 
 // 2. Implement the Originator (Responsible for diff calculation and patching)
 export class TextEditorOriginator extends DiffOriginator<TextEditorState, TextEditorMemento> {
-  text: string = '';
+  _text: string = '';
 
-  override setState(state: TextEditorState): void {
-    this.text = state.text;
+  get text() {
+    return this._text;
+  }
+
+  set text(v: string) {
+    this._text = v;
+    this.notify('text');
   }
 
   override getState(): TextEditorState {
@@ -144,18 +150,18 @@ export class TextEditorOriginator extends DiffOriginator<TextEditorState, TextEd
     // Only save history if there was an actual difference (delta is defined).
     if (!delta) return null; 
     
-    return { diff: delta };
+    return { delta };
   }
 
   // 4. Restore: Use unpatch for UNDO (revert the change) and patch for REDO (re-apply the change).
   override restoreMemento(memento: TextEditorMemento, action: RestoreMementoAction): void {
     if (action === RestoreMementoAction.Undo) {
       // UNDO: Revert the delta from the current state.
-      const newState = unpatch(this.getState(), memento.diff) as TextEditorState;
+      const newState = unpatch(this.getState(), memento.delta) as TextEditorState;
       this.text = newState.text;
     } else {
       // REDO: Apply the delta to the current state.
-      const newState = patch(this.getState(), memento.diff) as TextEditorState;
+      const newState = patch(this.getState(), memento.delta) as TextEditorState;
       this.text = newState.text;
     }
   }
@@ -183,47 +189,62 @@ Look how easy it is.
 'use client';
 
 import { useReactiveInstance } from '@dxbox/use-less-react/client';
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import {
   TextEditorCaretaker,
   TextEditorOriginator,
 } from '@/modules/text-editor/text-editor.classes';
 
 export const TextEditorConnector: FC = () => {
-  const { state, instance: textEditor } = useReactiveInstance(
-    () => new TextEditorCaretaker(new TextEditorOriginator()),
-    ({ canDo, canRedo, originator }) => ({
-      text: originator.getState().text,
+  const originator = useRef(new TextEditorOriginator());
+
+  const {
+    state: { canUndo, canRedo },
+    instance: textEditor,
+  } = useReactiveInstance(
+    () => new TextEditorCaretaker(originator.current),
+    ({ canUndo, canRedo }) => ({
       canUndo,
-      canUndo,
+      canRedo,
     }),
-    ['originator', 'canUndo', 'canRedo'],
+    ['canUndo', 'canRedo'],
+  );
+
+  // Originator is a distinct PubSub instance, so we listen to it separately!
+  const {
+    state: { text },
+  } = useReactiveInstance(
+    originator.current,
+    ({ text }) => ({
+      text,
+    }),
+    ['text'],
   );
 
   return (
-    <div className="grid grid-cols-2">
+    <div className="grid grid-cols-3">
       <textarea
         className="border"
         placeholder="write here..."
-        value={state.text}
-        onChange={(e) => textEditor.setState({ text: e.target.value })}
+        value={text}
+        onChange={(e) => (textEditor.originator.text = e.target.value)}
       />
-      <div className="flex items-center gap-2">
-        <button className="border p-2" type="button" onClick={() => textEditor.saveState()}>
+      <div className="">
+        <button className="mx-2 border p-2" type="button" onClick={() => textEditor.saveState()}>
           save
         </button>
         <button
-          className={`border p-2 ${!state.canUndo && 'opacity-50'}`}
+          className={`mx-2 border p-2 ${!canUndo && 'opacity-50'}`}
           type="button"
-          disabled={!state.canUndo}
+          disabled={!canUndo}
           onClick={() => textEditor.undo()}
         >
           undo
         </button>
         <button
-          className={`border p-2 ${!state.canRedo && 'opacity-50'}`}
+          className={`mx-2 border p-2 ${!canRedo && 'opacity-50'}`}
           type="button"
-          disabled={!state.canRedo}
+          disabled={!canRedo}
           onClick={() => textEditor.redo()}
         >
           redo
@@ -233,7 +254,7 @@ export const TextEditorConnector: FC = () => {
   );
 };
 ```
-Of course this is a super-basic example. Go ahead and implement automatic setState on blur, with a debounce, or whatever you like!
+Of course this is a super-basic example. Go ahead and implement automatic saveState on blur, with a debounce, or whatever you like!
 
 ## Ready to Give Your Users an Undo Button?
 

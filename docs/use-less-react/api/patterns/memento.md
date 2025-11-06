@@ -44,11 +44,11 @@ interface AbstractCaretakerProps<TMemento, Originator> {
 ### `AbstractOriginatorProps`
 
 ```typescript
-export type AbstractOriginatorProps<TState, TMemento> = {
+export interface AbstractOriginatorProps<TState, TMemento>
+  extends Subscribable {
   getState(): TState;
-  setState(state: TState): void;
   restoreMemento(memento: TMemento, action: RestoreMementoAction): void;
-};
+}
 ```
 
 -----
@@ -64,9 +64,8 @@ This is the simpler interface, designed for saving full state copies (a simple s
 | Method | Signature | Description |
 | :--- | :--- | :--- |
 | `getState()` | `(): TState` | Returns a copy of the current internal state. |
-| `setState(state: TState)` | `(state: TState): void` | Mutates the internal state. |
 | `getMemento(state: TState)` | `(state: TState): TMemento \| null` | **Required.** Generates the Memento object from the current state (e.g., returns the full state or a subset). |
-| `restoreMemento()` | `(memento: TMemento, action: RestoreMementoAction): void` | **Required.** Restores the state from the Memento. In Base mode, this is usually a simple `setState(memento)`. |
+| `restoreMemento()` | `(memento: TMemento, action: RestoreMementoAction): void` | **Required.** Restores the state from the Memento. |
 
 ### 🅱️ `DiffOriginator<TState, TMemento>` (Incremental)
 
