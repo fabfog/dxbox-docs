@@ -18,6 +18,8 @@ By integrating classic OOP patterns for domain management, we gain immediate and
 
 Thus, by minimizing the use of React-specific API for your state, a paradox unfolds: by using less React, **React can ultimately be used more.** By adopting `use-less-react`'s philosophy, our code not only gains in terms of scalability, but it also becomes accessible to a broader range of developers (including Node.js back-end developers), and it becomes viable for more sophisticated project types where the current limitations of Hooks severely restrict front-end expressiveness.
 
+<!-- truncate -->
+
 ---
 
 ## React: between dominance and perceived decline
