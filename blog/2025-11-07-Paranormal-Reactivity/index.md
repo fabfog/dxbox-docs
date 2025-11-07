@@ -184,6 +184,51 @@ It works both with synchronous & asynchronous methods!
 
 Full tech specs [here](/docs/use-less-react/api/classes/batch-notifications)
 
+## Handling async data exchange with `batchNotifications`
+
+Be mindful how to use `batchNotifications` vs `@BatchNotifications`!
+
+❌ Wrong example
+
+```typescript
+@BatchNotifications()
+async getUserData(userId: string) {
+  this.isLoading = true;   
+  try {
+    this.user = await this.user.get(userId); 
+    this.error = null;
+  } catch (err) {
+    this.user = null;
+    this.error = err;
+  } finally {
+    this.isLoading = false; 
+  }
+  // Single notification: ['isLoading', 'error', 'user']
+}
+```
+Here, `isLoading` will be notified only once: at the end. So the UI will never be re-rendered to show `isLoading = true`.
+
+✅ Correct example
+```typescript
+async getUserData(userId: string) {
+  // first notification: 'isLoading'
+  this.isLoading = true; // this must stay outside the batch!
+
+  this.batchNotifications(() => {
+    try {
+      this.user = await this.user.get(userId); 
+      this.error = null;
+    } catch (err) {
+      this.user = null;
+      this.error = err;
+    } finally {
+      this.isLoading = false; 
+    }
+  })
+  // second notification: ['isLoading', 'user', 'error']
+}
+```
+
 -----
 
 ## Final considerations

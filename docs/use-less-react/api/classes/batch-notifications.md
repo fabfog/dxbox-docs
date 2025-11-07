@@ -52,25 +52,3 @@ The `@BatchNotifications` decorator acts as an interceptor:
 1.  **Captures the Method:** When applied, it overrides the definition of the original method.
 2.  **Injects the Wrapper:** The new method implementation executes all of the original method's logic within the `this.batchNotifications()` *callback*.
 
-### Asynchronous Handling
-
-The decorator is designed to support both synchronous and asynchronous methods. If the decorated method is an `async` function (which returns a `Promise`), `batchNotifications` will wait for the `Promise` to settle before closing the batching block and sending the notification.
-
-**Asynchronous Example:**
-
-```typescript
-@BatchNotifications()
-async saveUserData(data: UserData) {
-  // Queues the notification
-  this.isLoading = true; 
-  
-  // Waits for the asynchronous operation
-  await this.modelService.save(data); 
-  
-  // Queues the notification
-  this.isLoading = false; 
-  this.isSaved = true;
-
-  // Single notification: ['isLoading', 'isSaved']
-}
-```
