@@ -14,7 +14,7 @@ const config = {
 
   title: '@dxbox docs',
   tagline: "Tools for the developer",
-  url: 'https://dxbox-docs.vercel.app/',
+  url: 'https://dxbox-docs.dev/',
   baseUrl: '/',
   projectName: 'dxbox-docs',
   organizationName: 'dxbox',

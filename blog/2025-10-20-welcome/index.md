@@ -82,5 +82,5 @@ If you love the idea of writing *less React code* while keeping *full reactivity
 ---
 
 ### Get started
-The full documentation and examples are available [here](https://dxbox-docs.vercel.app/docs/use-less-react/intro)
+The full documentation and examples are available [here](/docs/use-less-react/intro)
 
