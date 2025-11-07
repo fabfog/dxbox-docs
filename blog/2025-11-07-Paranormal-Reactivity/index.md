@@ -13,15 +13,21 @@ Our beloved `PubSub`-based reactive system has two new features. They're designe
 
 The new key functionalities are: **`makeReactiveProperties`** (for a cleaner syntax and less boilerplate) and **`batchNotifications`** (for maximum efficiency).
 
-These features are available immediately from [v0.7.0](https://www.npmjs.com/package/@dxbox/use-less-react/v/0.7.0).
+These features are available from [v0.7.0](https://www.npmjs.com/package/@dxbox/use-less-react/v/0.7.0). 
+
+Tech details [here](/docs/use-less-react/api/classes/pubsub#declaring-reactive-properties).
+
+Here's what they do:
 
 ---
 
 ## 1. Zero boilerplate: `makeReactiveProperties`
 
-Until now, making a property reactive often required using decorators or manual *getters/setters*, asking developers to call `this.notify('propName')` every time a value changed. While this is the responsibility of a reactive layer implementing a PubSub pattern, I realize it can be tedious and repetitive.
+Until now, making a property reactive required using decorators or calling `this.notify('propName')` every time a value changed. While this is the responsibility of a reactive layer implementing a PubSub pattern, I realize it can be tedious and repetitive.
 
 The new feature **`makeReactiveProperties`** eliminates this friction, allowing you to write your class properties naturally, delegating the complex notification setup to the framework's core unless you have very specific needs that require manual calls to `notify`.
+
+<!-- truncate -->
 
 ### Before (manual notification boilerplate)
 
@@ -147,6 +153,36 @@ async updateAll(data: { x: number, y: number }) {
   // - if someCondition was not met, only "x" is notified
 }
 ```
+
+## `@BatchNotifications` decorator
+
+You can decorate any `PubSub` method with `@BatchNotifications` to automatically wrap its logics in a `batchNotifications` call.
+
+So this:
+
+```typescript
+@BatchNotifications()
+updateProfileAndAge(name: string, age: number) {
+  // These reactive setters are internally queued
+  this.firstName = name;
+  this.age = age;
+}
+```
+
+is equivalent to this:
+
+```typescript
+async updateProfileAndAge(name: string, age: number) {
+  await this.batchNotifications(() => {
+    this.firstName = name;
+    this.age = age;
+  });
+}
+```
+
+It works both with synchronous & asynchronous methods!
+
+Full tech specs [here](/docs/use-less-react/api/classes/batch-notifications)
 
 -----
 

@@ -30,6 +30,7 @@ const sidebars = {
             'use-less-react/api/classes/pubsub-mixin',
             'use-less-react/api/classes/depends-on',
             'use-less-react/api/classes/notifies',
+            'use-less-react/api/classes/batch-notifications',
             'use-less-react/api/classes/immutable-class',
             'use-less-react/api/classes/serializable-class',
           ]
