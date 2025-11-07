@@ -61,6 +61,13 @@ const sidebars = {
       label: 'View GitHub repo',
       href: 'https://github.com/fabfog/use-less-react',
     },
+    {
+          type: 'category',
+          label: 'FAQ',
+          items: [
+            'use-less-react/faq/logo',
+          ]
+        },
   ],
 };
 

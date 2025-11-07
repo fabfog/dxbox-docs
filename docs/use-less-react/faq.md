@@ -1,3 +1,0 @@
-# FAQ
-
-Page under construction 🔨
