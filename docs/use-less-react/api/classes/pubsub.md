@@ -74,6 +74,7 @@ sprite.subscribe((propNames) => {
   }
 });
 ```
+
 The `subscribe` method returns all the notified attributes. It doesn't return values, you have to get them manually if you need them.
 
 ### Use onNotify
@@ -106,6 +107,43 @@ export class Sprite extends PubSub {
 }
 ```
 When `setPosition` notifies `position`, everything will work like with a standard class attribute. So you can define derived values, notify them, and let `useReactiveInstance` know their value has changed, like any other attribute.
+
+### Declaring reactive properties
+
+Use `makeReactiveProperties` to automatically define a reactive setter that notifies a property whenever its value is changed.
+```ts
+class MyStore extends PubSub {
+  counter: number = 0;
+  message: string = "Hello";
+
+  constructor() {
+    super();
+    // Declares which properties should receive a reactive setter
+    this.makeReactiveProperties('counter', 'message'); 
+  }
+
+  incrementCounter() {
+    this.counter += 1; // this.notify("counter") is automatically called!
+  }
+}
+```
+It's intended to be used **inside the constructor, as the last instruction**.
+
+### Batching notifications
+
+Use `batchNotifications` for notifying many properties as one single call to `notify`
+```ts
+await instance.batchNotifications(() => {
+  someActionThatNotifiesX(); // calls instance.notify("y")
+  await someOtherActionThatNotifiesY(); // calls instance.notify("y")
+
+  if (someCondition) { // if a condition is met
+    await someActionThatNotifiesZ(); // calls instance.notify("z")
+  }
+});
+// at the end of the callback function passed to batchNotifications,
+// all the pending notifications are triggered together as instance.notify("x", "y", ...)
+```
 
 ## Notes
 
