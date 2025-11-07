@@ -45,9 +45,8 @@ const config = {
           sidebarPath: './sidebars.js',
         },
         ...(process.env.GOOGLE_ANALYTICS_TRACKING_ID ? {
-          googleAnalytics: {
+          gtag: {
             trackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
-            anonymizeIP: true,
           }
         } : {}),
         blog: {
