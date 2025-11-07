@@ -11,13 +11,11 @@ I'm afraid it's a little bit late for Halloween, but I do have a spooky update f
 
 Our beloved `PubSub`-based reactive system has two new features. They're designed to eliminate manual boilerplate, guarantee data integrity (even in asynchronous scenarios) and optimize performance.
 
-The new key functionalities are: **`makeReactiveProperties`** (for a cleaner syntax and less boilerplate) and **`batchNotifications`** (for maximum efficiency).
+The new key functionalities are: 
+- **a method for making reactive properties**: for a cleaner syntax and less boilerplate
+- **a method for batching notifications (and its related decorator)**: for maximum efficiency and predictability of the PubSub mechanism
 
-These features are available from [v0.7.0](https://www.npmjs.com/package/@dxbox/use-less-react/v/0.7.0). 
-
-Tech details [here](/docs/use-less-react/api/classes/pubsub#declaring-reactive-properties).
-
-Here's what they do:
+Here are the details.
 
 ---
 
@@ -238,3 +236,11 @@ async getUserData(userId: string) {
 While still an experimental library, I believe it's already showing its potential. Its core design is specifically focused on reconciling the unique reactivity requirements of the View with the complex data management needs of the Model.
 
 Most importantly, the library is achieving this without creating contamination between the two layers, thereby strictly enforcing the Separation of Concerns (SoC) principle.
+
+## Note
+
+The abovesaid features were intended to be available from [v0.7.0](https://www.npmjs.com/package/@dxbox/use-less-react/v/0.7.0), but this version was deprecated because `@BatchNotifications` export was missing - my apologies. 
+
+Please update to [v0.7.1](https://www.npmjs.com/package/@dxbox/use-less-react/v/0.7.1).
+
+Tech details [here](/docs/use-less-react/api/classes/pubsub#declaring-reactive-properties).
