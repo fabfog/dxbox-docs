@@ -19,10 +19,13 @@ The logo was designed to subtly yet effectively communicate our core value propo
 3.  **The "Minus" Symbol at the Center (The "Less"):**
     The central glyph, a circle bisected by a horizontal line, carries a dual meaning:
     * It references the **heart of the state** (the central circle in the React logo).
-    * The cutting line is the mathematical symbol for **"minus" (-)**.
+    * The cutting line is a **"minus"** in negative space.
 
-This "minus" sign is not an absence, but an **affirmation of efficiency**: `use-less-react` removes the *boilerplate*, unnecessary verbosity, and the need for manual reactivity management in favor of a cleaner, more consistent, and performance-optimized approach. You achieve the same result with less code and less architectural friction.
 
-In summary, our logo encapsulates the library's mission: **SOLID structure, targeted efficiency, and rigorous decoupling.**
+### Less is More
+
+The design of the logo is an **affirmation of simplicity**: `use-less-react` removes the complications imposed by a contaminated MVVM architecture in favor of a cleaner, more consistent and flexible approach. 
+
+You achieve **more expressive power** with less code, less dependencies, and less architectural friction.
 
 I also like to think it resembles the head of a **bolt**: simple, practical, no-nonsense, and indispensable for holding your architecture together!
