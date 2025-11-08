@@ -127,7 +127,27 @@ class MyStore extends PubSub {
   }
 }
 ```
-It's intended to be used **inside the constructor, as the last instruction**.
+It's intended to be used **inside the constructor, as the last instruction**. 
+
+It will throw if used on functions:
+
+```ts
+class MyStore extends PubSub {
+  counter: number = 0;
+
+  constructor() {
+    super();
+    this.makeReactiveProperties('incrementCounter'); 
+  }
+
+  incrementCounter() {
+    this.counter += 1; // this.notify("counter") is automatically called!
+  }
+}
+
+const store = new MyStore();
+```
+will throw `Cannot make reactive keys ["incrementCounter"]: functions cannot be made reactive`.
 
 ### Batching notifications
 
