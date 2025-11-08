@@ -168,5 +168,5 @@ await instance.batchNotifications(() => {
 ## Notes
 
 - `PubSub` is **agnostic** to the UI layer — it can be used in React, Node.js, or any JS runtime.
-- Use decorators like `@Notifies` and `@DependsOn` to integrate smoothly with reactivity systems.
+- Use decorators like `@Notifies`, `@DependsOn` and `@BatchNotifications` to integrate smoothly with reactivity systems.
 - Combine with the `@ImmutableClass` decorator for safer state updates in development.
