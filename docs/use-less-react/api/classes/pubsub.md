@@ -141,7 +141,7 @@ class MyStore extends PubSub {
   }
 
   incrementCounter() {
-    this.counter += 1; // this.notify("counter") is automatically called!
+    this.counter += 1;
   }
 }
 
