@@ -1,4 +1,4 @@
-# State (Finite State Machine - FSM)
+# State (Finite State Machine)
 
 The FSM suite provides the contracts and context implementation necessary to apply the **State Design Pattern** to complex flows (such as authentication or onboarding). This approach ensures clear, separate, and highly testable logic.
 

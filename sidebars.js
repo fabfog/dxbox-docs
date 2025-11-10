@@ -47,10 +47,11 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Design Patterns',
+          label: 'Prefabs',
           items: [
-            'use-less-react/api/patterns/state',
-            'use-less-react/api/patterns/memento',
+            'use-less-react/api/prefabs/state',
+            'use-less-react/api/prefabs/memento',
+            'use-less-react/api/prefabs/event-bus',
           ]
         },
       ]

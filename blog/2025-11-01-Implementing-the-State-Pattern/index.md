@@ -152,11 +152,11 @@ import { FSMContext, type FSMState } from './types';
 export type AuthConfig = InitializingConfig & LoginConfig & AuthenticatedConfig;
 
 export class AuthFlowManager extends PubSub implements FSMContext<AuthConfig> {
-  private _currentState: FSMState<AuthConfig>;
+  private _currentState: FSMState<AuthConfig, keyof AuthConfig>;
   private _error: Error | null;
   private _session: Session | null;
 
-  constructor(initialState?: FSMState<AuthConfig>) {
+  constructor(initialState?: FSMState<AuthConfig, keyof AuthConfig>) {
     super();
     this._session = null;
     this._error = null;
@@ -174,7 +174,7 @@ export class AuthFlowManager extends PubSub implements FSMContext<AuthConfig> {
   }
 
   @Notifies('currentState', 'error')
-  transitionTo(state: FSMState<AuthConfig>) {
+  transitionTo(state: FSMState<AuthConfig, keyof AuthConfig>) {
     this.error = null;
     this._currentState = state;
   }
@@ -397,7 +397,7 @@ Let's also consider that they won't need any changes as requirements scale: **yo
 Truth be told: types like this will soon be **provided out-of-the-box** as a part of `use-less-react`. The goal of this library is to empower developers to adopt effective patterns with minimal boilerplate, instead of letting them fall into anti-patterns like writing logics inside centralized hooks. So it makes sense to provide all the necessary tools (types/interfaces, classes, code generators, etc.) to get the job done without re-inventing the wheel.
 
 ### Update November 2, 2025
-The context base class and types for implementing the **State Design Pattern** have been included as a part of [`use-less-react` v0.5.0](https://www.npmjs.com/package/@dxbox/use-less-react/v/0.5.0), you can find the documentation [here](/docs/use-less-react/api/patterns/state)!.
+The context base class and types for implementing the **State Design Pattern** have been included as a part of [`use-less-react` v0.5.0](https://www.npmjs.com/package/@dxbox/use-less-react/v/0.5.0), you can find the documentation [here](/docs/use-less-react/api/prefabs/state)!.
 
 ## Conclusion
 

@@ -9,7 +9,7 @@ tags: [use-less-react]
 
 I'm thrilled to announce that the **Memento Pattern** is now officially supported and deeply integrated into the core of `use-less-react`! (from [v0.6.0](https://www.npmjs.com/package/@dxbox/use-less-react/v/0.6.0))
 
-Read the technical documentation <a href="/docs/use-less-react/api/patterns/memento" target="_blank">here</a>!
+Read the technical documentation <a href="/docs/use-less-react/api/prefabs/memento" target="_blank">here</a>!
 
 This means adding robust "Undo" and "Redo" functionality to your complex state managers has never been easier, allowing your users to step back in time with a single click.
 
