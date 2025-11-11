@@ -81,7 +81,7 @@ Then you can publish the abovesaid events like this:
 import { eventBus } from "@/event-bus";
 // A ViewModel for a React component (e.g., a settings form)
 export class SettingsViewModel {
-  constructor() {}
+  constructor(private eventBus: HybridEventBusInterface) {}
 
   // Method called by the UI (e.g., a "Save" button)
   async updateProfile(userId: string, newName: string) {
@@ -93,7 +93,7 @@ export class SettingsViewModel {
     });
 
     // Publishes the event, without knowing who will handle it
-    await eventBus.publish(event); 
+    await this.eventBus.publish(event); 
 }
 
   // Method called by a local action (e.g., a theme switch)
@@ -101,7 +101,7 @@ export class SettingsViewModel {
     const event = new ThemeChangedEvent({
       payload: { newTheme: theme }
     });
-    await eventBus.publish(event);
+    await this.eventBus.publish(event);
   }
 }
 ```
@@ -113,18 +113,17 @@ Who's on the other end of the line?
 In the next example we'll define another class listening for updates on the event bus.
 
 ```typescript
-import { eventBus } from "@/event-bus";
 
 // A component that reacts to the profile update
 export class ToasterViewModel {
   toastText = "";
 
-  constructor() {
+  constructor(private eventBus: HybridEventBusInterface) {
     this.makeReactiveProperties("toastText");
   }
 
   private subscribeToProfileEvents() {
-    const unsubscribeProfileUpdated = eventBus
+    const unsubscribeProfileUpdated = this.eventBus
       .registerLocalHandler<"UserProfileUpdated", UserProfileUpdatedPayload>(
         "UserProfileUpdated",
         (userEvent) => {
@@ -145,7 +144,7 @@ Then, in the related view:
 ```tsx
 const ToasterView: FC = () => {
   // instantiate the ViewModel class
-  const viewModelRef = useRef(new ToasterViewModel());
+  const viewModelRef = useRef(new ToasterViewModel(eventBus));
 
   const {
     state: {

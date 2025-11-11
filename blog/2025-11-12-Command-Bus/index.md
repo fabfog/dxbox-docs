@@ -90,7 +90,7 @@ export class UserProfileHandler
         name: newName 
       }
     });
-    eventBus.publish(event);
+    this.eventBus.publish(event);
   }
 }
 ```
@@ -126,14 +126,12 @@ export const commandBus = commandDispatcher;
 ### 3. Dispatching commands from a ViewModel
 
 ```typescript
-import { commandBus } from "@/command-bus";
-
 export class UserProfileViewModel extends PubSub {
   public isLoading: boolean;
   public error: string;
   public name: string;
 
-  constructor(name?: string) {
+  constructor(private commandBus: HybridCommandBusInterface, name?: string) {
     this.isLoading = false;
     this.error = "";
     this.name = name ?? "";
@@ -142,13 +140,13 @@ export class UserProfileViewModel extends PubSub {
 
   async updateProfile() {
     const newName = this.name;
-    const command = new UpdateUserProfileCommand({ userId, newName });
     this.loading = true;
 
     this.batchNotifications(() => {
       this.error = "";
       try {
-        await commandBus.dispatch(command);
+        const command = new UpdateUserProfileCommand({ userId, newName });
+        await this.commandBus.dispatch(command);
       } catch (error) {
         this.error = `Error: Failed to update profile. ${error.message}`;
       } finally {
@@ -175,7 +173,7 @@ const UserProfileForm = () => {
     },
     instance: viewModel
   } = useReactiveInstance(
-    () => new UserProfileViewModel(),
+    () => new UserProfileViewModel(commandBus),
     ({ name, isLoading, error }) => ({
       name, 
       isLoading, 
