@@ -227,7 +227,7 @@ const UserProfileForm = () => {
 
 ### 5. Letting other subscribers know about the change
 
-If you recall what we did in [our previous post about the Event Bus](/blog/2025-11-10-Event-Bus/), you should already be aware of how easy it is to notify other parts of the application about the execution of our command. 
+If you recall what we did in [our previous post about the Event Bus](/blog/how-the-use-less-react-hybrid-event-bus-will-improve-your-front-end-architecture), you should already be aware of how easy it is to notify other parts of the application about the execution of our command. 
 Since the command handler publishes a `UserProfileUpdatedEvent`, we can replicate [this exact example](/blog/how-the-use-less-react-hybrid-event-bus-will-improve-your-front-end-architecture#3-listening-to-events-in-other-classes) to show a notification via a Toaster, for instance.
 
 ## Dealing with the immutability of Command handlers
