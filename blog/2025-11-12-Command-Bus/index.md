@@ -34,7 +34,7 @@ In a traditional Redux flow, a component dispatches an **action**. That action t
 
 1.  **Distributed logic:** business logic and side effects are scattered across thunks/sagas (middleware) and reducers, making it difficult to find the single source of truth for a complex operation like "Update user profile."
 2.  **Monolithic state reliance:** every action is designed to interact with a single, often massive, global state object. This creates strong coupling between components and the state structure, inhibiting micro-frontend architectures or feature modularity.
-3.  **Domain state pollution with UI state properties:** since Redux Actions typically don't return an event or outcome, developers often resort to injecting UI-specific data (e.g., isLoading, isSubmitting, isModalOpen) into the global store to manage side effects and display UI states. This leads to "state pollution," where the global store—intended to hold immutable domain truths (e.g., User data, Product lists)—is unnecessarily burdened with transient, local UI concerns.
+3.  **Domain state pollution with UI state properties:** since Redux Actions typically don't return an event or outcome, developers often resort to injecting UI-specific data (e.g., isLoading, isSubmitting, isModalOpen) into the global store to manage side effects and display UI states. This leads to "state pollution," where the global store — intended to hold granitic domain truths (e.g., User data, Product lists) — is unnecessarily burdened with transient, local UI concerns.
 
 The **Command Bus** solves these problems by enforcing **Command-handler separation**.
 
@@ -72,9 +72,9 @@ export class UpdateUserProfileCommand
   }
 }
 
-export class UserProfileHandler implements CommandHandlerInterface<UpdateUserProfileCommand> {
-  constructor() {}
-
+export class UserProfileHandler 
+  implements CommandHandlerInterface<UpdateUserProfileCommand> 
+{
   async handle(command: UpdateUserProfileCommand): Promise<void> {
     // Simulates a failure condition
     if (!command.payload.newName || command.payload.newName.trim() === '') {
@@ -130,7 +130,7 @@ import { commandBus } from "@/command-bus";
 
 export class UserProfileViewModel extends PubSub {
   public isLoading: boolean;
-  public isLoading: boolean;
+  public error: string;
   public name: string;
 
   constructor(name?: string) {
@@ -141,7 +141,8 @@ export class UserProfileViewModel extends PubSub {
   }
 
   async updateProfile() {
-    const command = new UpdateUserProfileCommand({ userId, newName: this.name });
+    const newName = this.name;
+    const command = new UpdateUserProfileCommand({ userId, newName });
     this.loading = true;
 
     this.batchNotifications(() => {
