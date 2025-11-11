@@ -1,7 +1,7 @@
 ---
 slug: how-the-use-less-react-hybrid-event-bus-will-improve-your-front-end-architecture
 authors: [fabfog]
-date: "2025-11-11"
+date: "2025-11-10"
 tags: [use-less-react]
 ---
 
@@ -17,7 +17,7 @@ Using an Event Bus is kinda like getting state updates via the Pub/Sub pattern, 
 
 Crucially, listening to events mean you will never need to know the "shape" of a global state; logics will only depend on a small, specific piece of data (the event). This completely prevents the common issue that arises with Redux or with large Context stores, where a component depends on a huge store just to access a couple fields. 
 
-This high level of isolation means any application segment can be cleanly separated fromt he rest at any time — even for focused unit testing — and will continue to function perfectly as long as it's supplied with the granular events it needs.
+This high level of isolation means any application segment can be cleanly separated from the rest at any time — even for focused unit testing — and will continue to function perfectly as long as it's supplied with the granular events it needs.
 
 ## How it works
 
@@ -78,9 +78,10 @@ export class UserProfileUpdatedEvent
 Then you can publish the abovesaid events like this:
 
 ```typescript
+import { eventBus } from "@/event-bus";
 // A ViewModel for a React component (e.g., a settings form)
 export class SettingsViewModel {
-  constructor(private eventBus: HybridEventBusInterface) {}
+  constructor() {}
 
   // Method called by the UI (e.g., a "Save" button)
   async updateProfile(userId: string, newName: string) {
@@ -92,7 +93,7 @@ export class SettingsViewModel {
     });
 
     // Publishes the event, without knowing who will handle it
-    await this.eventBus.publish(event); 
+    await eventBus.publish(event); 
 }
 
   // Method called by a local action (e.g., a theme switch)
@@ -100,7 +101,7 @@ export class SettingsViewModel {
     const event = new ThemeChangedEvent({
       payload: { newTheme: theme }
     });
-    await this.eventBus.publish(event);
+    await eventBus.publish(event);
   }
 }
 ```
@@ -112,16 +113,18 @@ Who's on the other end of the line?
 In the next example we'll define another class listening for updates on the event bus.
 
 ```typescript
+import { eventBus } from "@/event-bus";
+
 // A component that reacts to the profile update
 export class ToasterViewModel {
   toastText = "";
 
-  constructor(private eventBus: HybridEventBusInterface) {
+  constructor() {
     this.makeReactiveProperties("toastText");
   }
 
   private subscribeToProfileEvents() {
-    const unsubscribeProfileUpdated = this.eventBus
+    const unsubscribeProfileUpdated = eventBus
       .registerLocalHandler<"UserProfileUpdated", UserProfileUpdatedPayload>(
         "UserProfileUpdated",
         (userEvent) => {
@@ -141,10 +144,8 @@ Then, in the related view:
 
 ```tsx
 const ToasterView: FC = () => {
-  // Get the eventBus from a context provider (explained later)
-  const eventBus = useEventBus();
   // instantiate the ViewModel class
-  const viewModelRef = useRef(new ToasterViewModel(eventBus));
+  const viewModelRef = useRef(new ToasterViewModel());
 
   const {
     state: {
@@ -173,37 +174,7 @@ The reason we subscribed inside the `useEffect` is: **cleanup**. We cannot simpl
 
 By subscribing to events inside the useEffect, we can guarantee the cleanup function is called on component unmount. And this is the only no-nonsense responsibility a component should have in this kind of logics.
 
-### 4\. Sharing the bus via Generic Context
-
-In the previous example, we used `useEventBus` in the component to retrieve the bus instance. This is not a new hook in `use-less-react`.
-
-In fact, you can share an event bus instance like any other instance, with a simple **Generic Context**. In a file called - let's say - `contexts.ts`, you do this:
-
-```typescript
-import { createGenericContext } from '@dxbox/use-less-react/client';
-import { HybridEventBus } from '@dxbox/use-less-react/classes';
-
-export const [EventBusProvider, useEventBus] = createGenericContext<HybridEventBus>();
-```
-
-Then, in the app root, or on a specific page (e.g. in Next.js) you use the provider, for example:
-```tsx
-'use client';
-
-import { EventBusProvider } from '@/contexts';
-// we created an eventBus instance in a separate file
-import { eventBus } from '@/classes/event-bus'; 
-
-export const dynamic = 'force-dynamic';
-
-export default function Page() {
-  return (
-    <EventBusProvider value={eventBus}>
-      // children components
-    </EventBusProvider>
-  );
-}
-```
+**Note**: for this simple example, we assumed the ViewModel and the Event Bus stay in the same "place" (same repo, or same "app" if using a monorepo). If they live in different packages, just pass `eventBus` to the ViewModel constructor as an injected dependency. You can use a Generic Context to provide the Event Bus to the whole app, and pass it to the ViewModel from the View, should the necessity arise.
 
 ## Why "Hybrid" in the Frontend?
 
@@ -230,7 +201,7 @@ In an Event-Driven Architecture, the Services (the Handlers) only care about the
 If a piece of logic becomes too complex, too resource-intensive, or requires access to sensitive data, you can move it on the backend.
 
 1.  **Move the logic to the Backend:** take the complex piece of logic that was executed in a local handler, and instead of registering it in the frontend's in-memory bus, run it on a server (e.g., a Node.js worker or a Serverless Function). If the logic published an event when running on the client side... it will just do the same when running server side! The remote event bus can route the event to our client application via a socket, for example.
-2.  **The Client Doesn't Change:** all the remaining parts of the application that stay on the client, will just naturally react to the events being sent by the server and received via the `receiveFromRemote` method of the Hybrid Event Bus.
+2.  **The client doesn't change:** all the remaining parts of the application that stay on the client will just naturally react to the events being sent by the server and received via the `receiveFromRemote` method of the Hybrid Event Bus.
 
 This **location independence** allows for fine-grained performance tuning and security improvements without requiring sweeping refactors of the client-side components that depend on the outcome.
 

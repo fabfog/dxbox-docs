@@ -52,6 +52,7 @@ const sidebars = {
             'use-less-react/api/prefabs/state',
             'use-less-react/api/prefabs/memento',
             'use-less-react/api/prefabs/event-bus',
+            'use-less-react/api/prefabs/command-bus',
           ]
         },
       ]
