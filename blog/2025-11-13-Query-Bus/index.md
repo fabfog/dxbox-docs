@@ -1,7 +1,7 @@
 ---
 slug: cqrs-complete-exploring-the-potential-of-use-less-react-new-querybus
 authors: [fabfog]
-date: "2025-11-14"
+date: "2025-11-13"
 tags: [use-less-react]
 ---
 
@@ -171,4 +171,4 @@ The QueryBus is our ticket to developing complex, high-performance applications 
 
 The abovesaid features are available from [v0.10.0](https://www.npmjs.com/package/@dxbox/use-less-react/v/0.10.0).
 
-<!-- Tech details [here](/docs/use-less-react/api/prefabs/query-bus). -->
+Tech details [here](/docs/use-less-react/api/prefabs/query-bus).
