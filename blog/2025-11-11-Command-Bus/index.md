@@ -1,7 +1,7 @@
 ---
 slug: command-and-conquer-mastering-application-flow-with-the-hybrid-command-bus
 authors: [fabfog]
-date: "2025-11-12"
+date: "2025-11-11"
 tags: [use-less-react]
 ---
 # Command and Conquer: mastering application flow with the Hybrid Command Bus

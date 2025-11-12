@@ -1,7 +1,7 @@
 ---
 slug: cqrs-complete-exploring-the-potential-of-use-less-react-new-querybus
 authors: [fabfog]
-date: "2025-11-13"
+date: "2025-11-12"
 tags: [use-less-react]
 ---
 
