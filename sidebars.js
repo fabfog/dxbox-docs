@@ -69,6 +69,7 @@ const sidebars = {
           label: 'FAQ',
           items: [
             'use-less-react/faq/logo',
+            'use-less-react/faq/useReactiveInstance',
           ]
         },
   ],
